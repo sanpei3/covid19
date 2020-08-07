@@ -309,6 +309,7 @@ const init = () => {
               id: "axisScale",
               location: "bottom",
               stacked: isStacked,
+              type: "logarithmic",
               gridLines: {
                 drawBorder: false,
                 display: false
@@ -327,6 +328,8 @@ const init = () => {
         }
       };
 
+      // set graph type
+      config.options.scales.yAxes[0].type = graphType;
       axisConfig.data.datasets.forEach(function(dataset, i){
         dataset.backgroundColor = "transparent";
         dataset.borderColor = "transparent";
@@ -359,6 +362,8 @@ const init = () => {
     let $chart = $box.find(".main-chart").empty().html("<canvas></canvas>");
     let $canvas = $chart.find("canvas")[0];
     let switchValue = $box.find(".switch.selected").attr("value");
+    let graphValue = $box.find(".graph.switch.selected").attr("value");
+    let graphType = (graphValue == "linear" ? "linear" : "logarithmic");
     let hasMovingAverage = ($box.find(".checkbox.moving-average").hasClass("on")) ? true: false;
 
     let root = gData.transition[code];
@@ -431,6 +436,7 @@ const init = () => {
             }
           }],
           yAxes: [{
+            type: "logarithmic",
             location: "bottom",
             stacked: true,
             gridLines: {
@@ -452,6 +458,8 @@ const init = () => {
         }
       }
     };
+    // set graph type
+    config.options.scales.yAxes[0].type = graphType;
 
     for (let i = 0; i < rows[0].length; i++) {
       config.data.datasets.push({
